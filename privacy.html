@@ -35,7 +35,7 @@
     <svg viewBox="0 0 128 128" aria-hidden="true"><rect width="128" height="128" rx="30" fill="#5961df"/><rect x="28" y="28" width="31" height="31" rx="7" fill="white"/><rect x="69" y="28" width="31" height="31" rx="7" fill="white" opacity=".8"/><rect x="28" y="69" width="31" height="31" rx="7" fill="white" opacity=".6"/><rect x="69" y="69" width="31" height="31" rx="7" fill="white"/></svg>
     <h1>Mullion 隐私政策<br /><small style="font-size:18px;color:#6b7486">Privacy Policy</small></h1>
   </header>
-  <p class="meta">生效日期 / Effective date: 2026-11-13</p>
+  <p class="meta">生效日期 / Effective date: 2026-11-15</p>
   <nav><a href="#zh">中文</a><a href="#en">English</a></nav>
 
   <article id="zh" lang="zh-CN">
@@ -51,8 +51,13 @@
       <li>界面状态，例如待授权的网址草稿。</li>
     </ul>
     <p>工作台中的网页由你的浏览器直接从对应网站加载，这些网站如何处理你的数据由其自身的隐私政策决定。为了实现宽度适配、区域预览和外站链接在新标签页打开，Mullion 会在你授权的网站预览中运行扩展自带的脚本。这些脚本只在本地调整显示效果，<strong>不读取、不保存、也不上传网页内容</strong>。</p>
-    <p><strong>书签：</strong>开启书签抽屉并授权后，Mullion 会在本地读取 Chrome 书签用于展示和搜索，不创建、修改或上传书签。网站图标只从 Chrome 本地缓存中读取，不会访问书签对应的网站。</p>
-    <p><strong>价格币种：</strong>Mullion 会在本地读取浏览器语言列表和系统时区，用来决定显示人民币价格还是默认币种。语言列表和时区本身不会上传，结账时只发送所选的币种代码。</p>
+    <p><strong>书签：</strong>开启书签抽屉或命令面板中的书签搜索并授权后，Mullion 会在本地读取 Chrome 书签用于展示和搜索，不创建、修改或上传书签。网站图标只从 Chrome 本地缓存中读取，不会访问书签对应的网站。</p>
+    <p><strong>嵌入检测：</strong>对已授权的网站，Mullion 会在本地读取工作台预览的响应头（例如 X-Frame-Options 和 Content-Security-Policy），判断网站是否拒绝被嵌入，从而在窗格中提示原因。这些信息只用于当次显示，不保存、不上传。窗格中的「反馈这个网站」会用你自己的邮件应用打开一封草稿，只包含网站的域名，是否发送由你决定。</p>
+    <p><strong>站点授权范围：</strong>从 1.7 起，Mullion 为一个网站申请授权时，会覆盖它所在的整个网站，包括子域名和 http/https 两种协议（例如「xueqiu.com 的所有网站」）。网站的接口和登录服务常在子域名上，这样窗格才能带上你的登录状态。授权可以随时在 Chrome 的扩展设置中撤销。</p>
+    <p><strong>在窗格中保持登录状态（Cookie）：</strong>Chrome 不允许嵌入在工作台中的网页用脚本读写它自己的大部分 Cookie，因此网站在窗格里可能显示未登录，或者反复出现验证页。对开启了「在窗格中保持登录状态」（默认开启，可按网站关闭）且已授权的网站，Mullion 会在本地通过 <code>chrome.cookies</code> 接口，只在工作台窗格内、只为该网站本身读写它自己的 Cookie，效果与在普通标签页中一致：页面脚本能读到的 Cookie 范围与标签页相同，<strong>HttpOnly Cookie 永远不会交给页面</strong>；页面写入的 Cookie 按网站自己设定的属性保存。Mullion 不保存 Cookie 副本，不读取其他网站的 Cookie，也不会上传任何 Cookie。普通标签页中的网页不受影响。</p>
+    <p><strong>命令面板与快捷键：</strong>你在命令面板中输入的内容只在本地用于匹配工作台网页、操作和书签，不会保存或上传。选择「用默认搜索引擎搜索」时，Chrome 会用你在浏览器中设置的搜索引擎在新标签页搜索这段文字，搜索由该搜索引擎处理，Mullion 不接收搜索内容。快捷键由 Chrome 管理，Mullion 不记录你的按键。</p>
+    <p><strong>导入导出：</strong>配置码和 JSON 文件都在你的浏览器中生成和读取，内容是你的工作台配置（网址、名称、顺序与各项选项），不含账号信息、站点授权或网页内容。它们只会出现在你自己复制、保存或分享的地方，Mullion 不接收。</p>
+    <p><strong>价格币种与模板推荐：</strong>Mullion 会在本地读取浏览器语言列表和系统时区，用来决定显示人民币价格还是默认币种，以及先推荐「中国」还是「海外」的场景模板。语言列表和时区本身不会上传，结账时只发送所选的币种代码。场景模板打包在扩展中，选择模板不会访问任何网站，保存后工作台才会加载模板中的网页。</p>
 
     <h3>2. 登录后：我们收集的数据</h3>
     <p>登录是可选的。你使用邮箱验证码登录后，我们会收集和保存以下数据：</p>
@@ -119,8 +124,13 @@
       <li>Interface state such as draft URLs awaiting site access.</li>
     </ul>
     <p>Pages in the workspace are loaded by your browser directly from their websites, whose own privacy policies apply. To fit page width, show a selected region and open external links in new tabs, Mullion runs scripts packaged in the extension inside previews of sites you have granted access to. These scripts only adjust the display locally; they <strong>do not read, store or upload page content</strong>.</p>
-    <p><strong>Bookmarks:</strong> If you enable the bookmark drawer and grant access, Mullion reads your Chrome bookmarks locally to display and search them. It never creates, modifies or uploads bookmarks. Site icons come only from Chrome's local cache; the bookmarked sites are not contacted.</p>
-    <p><strong>Price currency:</strong> Mullion reads your browser's language list and time zone locally to decide whether to show prices in CNY or the default currency. The language list and time zone are not uploaded; only the chosen currency code is sent at checkout.</p>
+    <p><strong>Bookmarks:</strong> If you enable the bookmark drawer or bookmark search in the command palette and grant access, Mullion reads your Chrome bookmarks locally to display and search them. It never creates, modifies or uploads bookmarks. Site icons come only from Chrome's local cache; the bookmarked sites are not contacted.</p>
+    <p><strong>Embedding check:</strong> For sites you have granted access to, Mullion reads the response headers of workspace previews (such as X-Frame-Options and Content-Security-Policy) locally, to tell whether a site refuses to be embedded and explain it in the pane. This is used only for display at the time; it is not stored or uploaded. "Report this site" in a pane opens a draft in your own email app containing only the site's domain, and you decide whether to send it.</p>
+    <p><strong>Scope of site access:</strong> Since 1.7, when Mullion asks for access to a website, the request covers the whole site, subdomains and both http and https included (for example "all xueqiu.com sites"). Sites often serve their APIs and sign-in from subdomains, and panes need this to carry your sign-in. You can withdraw access at any time in Chrome's extension settings.</p>
+    <p><strong>Staying signed in inside panes (cookies):</strong> Chrome doesn't let a page embedded in the workspace use script to read or write most of its own cookies, so a site may look signed out in a pane or keep showing a verification page. For granted sites with "Stay signed in inside panes" on (the default; it can be turned off per site), Mullion uses the <code>chrome.cookies</code> API locally, only inside workspace panes and only for that site itself, to read and write the site's own cookies as in a normal tab: the page's scripts see the same cookies they would in a tab, and <strong>HttpOnly cookies are never given to the page</strong>; cookies the page writes are stored with the attributes the site set. Mullion keeps no copy of cookies, never reads other sites' cookies, and never uploads any cookie. Pages in normal tabs are not affected.</p>
+    <p><strong>Command palette and shortcuts:</strong> What you type in the command palette is used only locally, to match workspace pages, actions and bookmarks; it is not stored or uploaded. If you choose "Search with your default search engine", Chrome searches for that text in a new tab with the search engine set in your browser, which handles the search; Mullion does not receive it. Keyboard shortcuts are managed by Chrome, and Mullion does not record your keystrokes.</p>
+    <p><strong>Import and export:</strong> Codes and JSON files are created and read in your browser. They contain your workspace configuration (URLs, names, order and options), with no account details, site access or page content. They go only where you copy, save or share them; Mullion does not receive them.</p>
+    <p><strong>Price currency and template suggestions:</strong> Mullion reads your browser's language list and time zone locally to decide whether to show prices in CNY or the default currency, and whether to suggest the China or International scene templates first. The language list and time zone are not uploaded; only the chosen currency code is sent at checkout. Scene templates are packaged in the extension: choosing one contacts no website, and the workspace loads its pages only after you save.</p>
 
     <h3>2. With an account: what we collect</h3>
     <p>Signing in is optional. After you sign in with an email code, we collect and store:</p>
