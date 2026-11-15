@@ -47,8 +47,8 @@
     <h3>1. 不登录时：数据只在本地</h3>
     <p>以下数据保存在当前 Chrome 配置文件的扩展本地存储（<code>chrome.storage.local</code>）中，不会发送给我们：</p>
     <ul>
-      <li>工作台配置：你添加的网址、名称、顺序，以及兼容模式、外链处理、缩放和所选区域（元素定位信息与简短标签）等设置；</li>
-      <li>界面状态，例如待授权的网址草稿。</li>
+      <li>工作台配置：各个工作台的名称，你添加的网址、名称、顺序，以及兼容模式、外链处理、缩放、自动刷新间隔和所选区域（元素定位信息与简短标签）等设置；</li>
+      <li>界面状态，例如待授权的网址草稿，以及这台设备上次使用的工作台（不同步）。</li>
     </ul>
     <p>工作台中的网页由你的浏览器直接从对应网站加载，这些网站如何处理你的数据由其自身的隐私政策决定。为了实现宽度适配、区域预览和外站链接在新标签页打开，Mullion 会在你授权的网站预览中运行扩展自带的脚本。这些脚本只在本地调整显示效果，<strong>不读取、不保存、也不上传网页内容</strong>。</p>
     <p><strong>书签：</strong>开启书签抽屉或命令面板中的书签搜索并授权后，Mullion 会在本地读取 Chrome 书签用于展示和搜索，不创建、修改或上传书签。网站图标只从 Chrome 本地缓存中读取，不会访问书签对应的网站。</p>
@@ -120,8 +120,8 @@
     <h3>1. Without an account: data stays local</h3>
     <p>The following is kept in the extension's local storage (<code>chrome.storage.local</code>) in your Chrome profile and is never sent to us:</p>
     <ul>
-      <li>Your workspace configuration: the URLs you add, their names and order, and settings such as compatibility mode, external-link handling, zoom and selected regions (an element locator and a short label);</li>
-      <li>Interface state such as draft URLs awaiting site access.</li>
+      <li>Your workspace configuration: the names of your workspaces, the URLs you add, their names and order, and settings such as compatibility mode, external-link handling, zoom, auto-refresh intervals and selected regions (an element locator and a short label);</li>
+      <li>Interface state such as draft URLs awaiting site access, and the workspace this device used last (not synced).</li>
     </ul>
     <p>Pages in the workspace are loaded by your browser directly from their websites, whose own privacy policies apply. To fit page width, show a selected region and open external links in new tabs, Mullion runs scripts packaged in the extension inside previews of sites you have granted access to. These scripts only adjust the display locally; they <strong>do not read, store or upload page content</strong>.</p>
     <p><strong>Bookmarks:</strong> If you enable the bookmark drawer or bookmark search in the command palette and grant access, Mullion reads your Chrome bookmarks locally to display and search them. It never creates, modifies or uploads bookmarks. Site icons come only from Chrome's local cache; the bookmarked sites are not contacted.</p>
