@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Mullion</title>
+  <style>
+    html, body { margin: 0; min-height: 100%; background: #f7f8fb; }
+    body { color: #293247; font: 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; -webkit-font-smoothing: antialiased; }
+    main { box-sizing: border-box; width: min(520px, calc(100% - 32px)); margin: 72px auto; padding: 32px 34px; border: 1px solid #e6e9f1; border-radius: 16px; background: white; box-shadow: 0 12px 40px #1d264012; }
+    .logo { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 12px; background: #5961df; }
+    .logo span { display: grid; grid-template-columns: repeat(2, 9px); gap: 3px; }
+    .logo i { display: block; width: 9px; height: 9px; border-radius: 2px; background: white; }
+    h1 { margin: 18px 0 6px; font-size: 22px; font-weight: 650; }
+    .lead { margin: 0 0 18px; color: #6d778d; }
+    fieldset { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; }
+    legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .reason { display: flex; gap: 10px; align-items: center; padding: 10px 12px; border: 1px solid #e3e7f0; border-radius: 9px; cursor: pointer; }
+    .reason:has(input:checked) { border-color: #9da2ee; background: #f4f5ff; }
+    .reason:has(input:focus-visible) { outline: 2px solid #5961df; outline-offset: 2px; }
+    .reason input { margin: 0; accent-color: #5961df; }
+    .comment { display: grid; gap: 6px; margin-top: 16px; color: #6d778d; font-size: 12px; }
+    textarea { box-sizing: border-box; width: 100%; padding: 9px 11px; border: 1px solid #dde2ec; border-radius: 8px; color: inherit; font: inherit; resize: vertical; }
+    button { margin-top: 16px; padding: 10px 26px; border: 0; border-radius: 8px; background: #5961df; color: white; font: inherit; font-weight: 600; cursor: pointer; }
+    button:hover { background: #494fc6; }
+    button:disabled { cursor: default; opacity: .5; }
+    .status { min-height: 1.6em; margin: 10px 0 0; color: #b5452f; font-size: 12px; }
+    .note { margin: 12px 0 0; color: #98a2b5; font-size: 11px; line-height: 1.7; }
+    .links { display: flex; gap: 16px; margin-top: 10px; font-size: 12px; }
+    a { color: #5961df; text-decoration: underline; text-underline-offset: 3px; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="logo" aria-hidden="true"><span><i></i><i></i><i></i><i></i></span></div>
+    <form id="survey" novalidate>
+      <h1 data-text="title"></h1>
+      <p class="lead" data-text="lead"></p>
+      <fieldset>
+        <legend data-text="lead"></legend>
+        <label class="reason"><input type="radio" name="reason" value="sites" /><span data-text="sites"></span></label>
+        <label class="reason"><input type="radio" name="reason" value="slow" /><span data-text="slow"></span></label>
+        <label class="reason"><input type="radio" name="reason" value="setup" /><span data-text="setup"></span></label>
+        <label class="reason"><input type="radio" name="reason" value="newtab" /><span data-text="newtab"></span></label>
+        <label class="reason"><input type="radio" name="reason" value="unused" /><span data-text="unused"></span></label>
+        <label class="reason"><input type="radio" name="reason" value="other" /><span data-text="other"></span></label>
+      </fieldset>
+      <label class="comment"><span data-text="comment"></span><textarea id="comment" rows="3" maxlength="500"></textarea></label>
+      <button id="send" type="submit" disabled data-text="send"></button>
+      <p id="status" class="status" role="status"></p>
+      <p class="note" data-text="note"></p>
+    </form>
+    <section id="thanks" hidden>
+      <h1 data-text="thanks"></h1>
+      <p class="lead" data-text="thanksBody"></p>
+    </section>
+    <div class="links"><a id="reinstall" data-text="reinstall"></a><a href="privacy.html" data-text="privacy"></a></div>
+  </main>
+  <script>
+    // Opened by Chrome after Mullion is removed: ?v=<version>&l=<zh|en>&d=<days installed>.
+    const ENDPOINT = "https://ufllynmlqzqykkdmpbmf.supabase.co/functions/v1/uninstall-feedback";
+    const STORE_URL = "https://chromewebstore.google.com/search/Mullion";
+    const TEXT = {
+      zh: {
+        title: "Mullion 已卸载", lead: "能告诉我们为什么吗？选一项就好，10 秒。",
+        sites: "需要的网站显示不了", slow: "太慢或太占资源", setup: "设置太麻烦", newtab: "想要回默认新标签页", unused: "用不上", other: "其他",
+        comment: "还想说的（可选）", placeholder: "比如：哪个网站显示不了", send: "提交", sending: "正在提交…", failed: "没有发出去，请稍后再试。",
+        note: "只收集你的选择、扩展版本、界面语言和使用天数，不关联任何账号。",
+        thanks: "谢谢，已经收到。", thanksBody: "我们会认真看每一条。", reinstall: "重新安装 Mullion", privacy: "隐私政策",
+      },
+      en: {
+        title: "Mullion has been removed", lead: "Could you tell us why? Pick one — it takes 10 seconds.",
+        sites: "The sites I need don't show", slow: "Too slow or uses too much memory", setup: "Too hard to set up", newtab: "I want my default new tab back", unused: "I didn't need it", other: "Something else",
+        comment: "Anything else? (optional)", placeholder: "For example: which site didn't show", send: "Send", sending: "Sending…", failed: "That didn't go through. Please try again in a moment.",
+        note: "We only collect your answer, the extension version, its language and how many days it was installed. Nothing is tied to an account.",
+        thanks: "Thank you — got it.", thanksBody: "We read every answer.", reinstall: "Reinstall Mullion", privacy: "Privacy policy",
+      },
+    };
+    const query = new URLSearchParams(location.search);
+    const locale = query.get("l") === "zh" ? "zh" : "en";
+    const text = TEXT[locale];
+    document.documentElement.lang = locale === "zh" ? "zh-CN" : "en";
+    document.title = text.title;
+    for (const node of document.querySelectorAll("[data-text]")) node.textContent = text[node.dataset.text];
+    const comment = document.getElementById("comment");
+    comment.placeholder = text.placeholder;
+    document.getElementById("reinstall").href = STORE_URL;
+    const form = document.getElementById("survey");
+    const send = document.getElementById("send");
+    const status = document.getElementById("status");
+    form.addEventListener("change", () => { send.disabled = !form.reason.value; });
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!form.reason.value || send.dataset.busy) return;
+      send.dataset.busy = "1";
+      send.disabled = true;
+      send.textContent = text.sending;
+      status.textContent = "";
+      const days = Number.parseInt(query.get("d") || "", 10);
+      const body = {
+        reason: form.reason.value, comment: comment.value.trim(), locale,
+        version: query.get("v") || null, days: Number.isInteger(days) ? days : null,
+      };
+      try {
+        const response = await fetch(ENDPOINT, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+        if (!response.ok) throw new Error(String(response.status));
+        form.hidden = true;
+        document.getElementById("thanks").hidden = false;
+      } catch {
+        status.textContent = text.failed;
+        send.disabled = false;
+      } finally {
+        delete send.dataset.busy;
+        send.textContent = text.send;
+      }
+    });
+  </script>
+</body>
+</html>
