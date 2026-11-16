@@ -56,7 +56,7 @@
       <h1 data-text="thanks"></h1>
       <p class="lead" data-text="thanksBody"></p>
     </section>
-    <div class="links"><a id="reinstall" data-text="reinstall"></a><a href="privacy.html" data-text="privacy"></a></div>
+    <div class="links"><a id="reinstall" data-text="reinstall"></a><a href="privacy.html" data-text="privacy"></a><a id="switch-language" lang=""></a></div>
   </main>
   <script>
     // Opened by Chrome after Mullion is removed: ?v=<version>&l=<zh|en>&d=<days installed>.
@@ -87,6 +87,13 @@
     const comment = document.getElementById("comment");
     comment.placeholder = text.placeholder;
     document.getElementById("reinstall").href = STORE_URL;
+    // English unless the extension says Chinese; either way the other language is one click away.
+    const other = new URL(location.href);
+    other.searchParams.set("l", locale === "zh" ? "en" : "zh");
+    const switcher = document.getElementById("switch-language");
+    switcher.href = other.href;
+    switcher.textContent = locale === "zh" ? "English" : "中文";
+    switcher.lang = locale === "zh" ? "en" : "zh-CN";
     const form = document.getElementById("survey");
     const send = document.getElementById("send");
     const status = document.getElementById("status");
